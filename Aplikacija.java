@@ -1,4 +1,4 @@
-package hr.atos.praksa.ivonamatos.zadatak15;
+package hr.atos.praksa.PatrikVinicki.zadatak15;
 import java.util.Scanner;
 
 import java.util.concurrent.TimeUnit;

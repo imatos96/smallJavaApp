@@ -1,4 +1,4 @@
-package hr.atos.praksa.ivonamatos.zadatak15;
+package hr.atos.praksa.PatrikVinicki.zadatak15;
 
 import java.io.File;  // Import the File class
 import java.io.FileWriter;
@@ -6,10 +6,17 @@ import java.io.IOException;  // Import the IOException class to handle errors
 
 public class FileWrite {
 	private File myObj;
+	private FileWriter myWriter;
 	
 	public FileWrite(File obj) {
 		// TODO Auto-generated constructor stub
 		this.myObj=obj;
+		try {
+			myWriter = new FileWriter(this.myObj.getName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void createFile() {
@@ -29,22 +36,22 @@ public class FileWrite {
 	}
 	
 	public void writeToFile(String writingInFile, boolean close) {
-		FileWriter myWriter;
 		try {
-			//initializing File writer
-			myWriter = new FileWriter(this.myObj);
-			//writinig in File
-			myWriter.write(writingInFile);
-			myWriter.append(writingInFile);
-			myWriter.flush();
-			if(close) {
-				myWriter.close();
-			}
+			this.myWriter.write(writingInFile);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+			if(close) {
+				try {
+					myWriter.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 	}
 
 }

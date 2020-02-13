@@ -1,5 +1,6 @@
-package hr.atos.praksa.ivonamatos.zadatak15;
+package hr.atos.praksa.PatrikVinicki.zadatak15;
 import java.util.Scanner;
+import java.io.FileWriter;
 import java.io.File;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -274,18 +275,19 @@ public class Authorization {
 		Date date=new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
 		//creating new file with date in title
-		File file= new File("employeeReport"+dateFormat.format(date)+".txt");
+		File file= new File("employeeReport "+dateFormat.format(date)+".txt");
 	    FileWrite fileWrite=new FileWrite(file);
 	    fileWrite.createFile();
 		try {
 			fileWrite.writeToFile("IZVJESTAJ PO RADNOM MJESTU\n",false);
 			fileWrite.writeToFile("  ----------------------\n\n", false);
-			fileWrite.writeToFile(" radno_mjesto |  kolicina", false);
+			fileWrite.writeToFile(" radno_mjesto |  kolicina\n", false);
 			while(this.result.next()) {
-				fileWrite.writeToFile(" " + result.getString("radno_mjesto") + " | " + result.getInt("amount"), false);
+				fileWrite.writeToFile("%8s" + result.getString("radno_mjesto") + " | " + result.getInt("amount") + "\n", false);
 				
 			}
-			fileWrite.writeToFile("  ----------------------\n\n", true);
+			fileWrite.writeToFile("  ----------------------\n", true);
+			this.result.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -297,7 +299,7 @@ public class Authorization {
 		Date date=new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
 		//creating new file with date in title
-		File file= new File("profitReport"+dateFormat.format(date)+".txt");
+		File file= new File("profitReport "+dateFormat.format(date)+".txt");
 	    FileWrite fileWrite=new FileWrite(file);
 	    fileWrite.createFile();
 		try {
@@ -309,17 +311,18 @@ public class Authorization {
 				 float prodajnaCijena=result.getInt("prodajna_cijena");
 				
 				 //writing data to .txt
-				 fileWrite.writeToFile("\n%s:"+result.getString("naziv"), false);
-				 fileWrite.writeToFile("\n\tNabavna kolicina:"+ nabavnaKolicina, false);
-				 fileWrite.writeToFile("\n\tTrenutno stanje:"+ trenutnoStanje, false);
-				 fileWrite.writeToFile("\n\tNabavna cijena:"+ nabavnaCijena, false);
-				 fileWrite.writeToFile("\n\tProdajna cijena:\n"+ prodajnaCijena, false);
-				
+				 fileWrite.writeToFile(result.getString("naziv") + ": \n", false);
+				 fileWrite.writeToFile("\tNabavna kolicina:"+ nabavnaKolicina + "\n", false);
+				 fileWrite.writeToFile("\tTrenutno stanje:"+ trenutnoStanje + "\n", false);
+				 fileWrite.writeToFile("\tNabavna cijena:"+ nabavnaCijena + "kn\n", false);
+				 fileWrite.writeToFile("\tProdajna cijena:"+ prodajnaCijena + "kn\n", false);
+				 fileWrite.writeToFile("  ---------------------\n", false);
 				 
-				 this.profit=this.profit+(((nabavnaKolicina-trenutnoStanje)*prodajnaCijena)-(nabavnaCijena*nabavnaKolicina));
+				 this.profit += (((nabavnaKolicina-trenutnoStanje)*prodajnaCijena)-(nabavnaCijena*nabavnaKolicina));
 				 
 			 }
-			fileWrite.writeToFile("\nUkupni profit je:\n\t"+this.profit, true);
+			fileWrite.writeToFile("\nUkupni profit je:\t"+this.profit+"kn\n", true);
+			this.result.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

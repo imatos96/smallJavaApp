@@ -1,0 +1,5 @@
+-Korisnici u DB
+
+-formatiran ispis u datoteku
+
+-korisničko ime u log datoteci

@@ -1,4 +1,4 @@
-package hr.atos.praksa.ivonamatos.zadatak15;
+package hr.atos.praksa.PatrikVinicki.zadatak15;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
